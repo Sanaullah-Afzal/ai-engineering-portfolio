@@ -1,0 +1,7 @@
+deepagents
+langchain
+langchain-groq
+langchain-openrouter
+ipykernel
+tavily-python
+python-dotenv

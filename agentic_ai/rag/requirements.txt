@@ -1,0 +1,12 @@
+langchain
+langchain-core
+langchain-community
+pypdf
+pymupdf
+langchain-text-splitters
+chromadb # opensource vector db
+faiss-cpu # opensource vector db
+sentence-transformers # for embeddings, available in hugging space
+langchain-groq # the downn 3 are aalso use for vectorless rags
+python-dotenv
+pageindex

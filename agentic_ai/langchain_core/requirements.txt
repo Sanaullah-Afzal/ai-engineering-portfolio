@@ -1,0 +1,8 @@
+# outside .venv folder and install these in venv, install recent version of all these
+langchain
+langchain-community
+langchain-openai
+langchain-groq
+langchain-openrouter
+langchain-google-genai
+python-dotenv
