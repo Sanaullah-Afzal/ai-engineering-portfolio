@@ -1,3 +1,5 @@
+# just install OBDC drover and MSSQL Server on Doekcer should be up
+
 from pathlib import Path
 import pandas as pd # to directly push and update in DB
 import urllib
@@ -13,7 +15,7 @@ load_dotenv(project_root / ".env")
 
 data_path = project_root / "data" / "raw" / "dynamic_supply_chain_logistics_dataset.csv"
 
-db_host = os.getenv("SQL_SERVER_HOST", "localhost")
+db_host = os.getenv("SQL_SERVER_HOST", "localhost") # if SQL_SERVER_HOST not found then default to localhost
 db_port = os.getenv("SQL_SERVER_PORT", "1433")
 db_user = os.getenv("SQL_ADMIN_USER")
 db_password = os.getenv("SQL_ADMIN_PASSWORD")
@@ -23,6 +25,7 @@ print(f"Loading CSV from {data_path}...")
 df = pd.read_csv(data_path)
 
 # 2. Map clean columns to a messy 2000s legacy enterprise schema
+# RHS is kind of weird names to mimic legacy system type names
 legacy_mapping = {
     'timestamp': 'TS_UTC',
     'vehicle_gps_latitude': 'V_LAT',
@@ -42,7 +45,8 @@ df_legacy = df[list(legacy_mapping.keys())].rename(columns=legacy_mapping)
 df_legacy['SYS_INGEST_FLAG'] = 'Y'
 
 # 3. Connect to Docker MSSQL Server
-print("Connecting to legacy MSSQL Database...")
+# We are making legacy system otherwise business will give us these all stuff
+print("Connecting to legacy MSSQL Database...") # to ingest the data
 # Use the pyodbc driver. (Ensure you have ODBC Driver 17 or 18 for SQL Server installed on your OS)
 connection_string = (
         f"DRIVER={{ODBC Driver 18 for SQL Server}};"
@@ -55,12 +59,14 @@ connection_string = (
     )
 
 params = urllib.parse.quote_plus(connection_string)
-
+# it will create an engine, using that we can insert the data
 engine = create_engine(f"mssql+pyodbc:///?odbc_connect={params}")
 
 # 4. Ingest data into the messy table name
 table_name = 'TBL_SC_FLEET_HIST_RAW'
 print(f"Ingesting into {table_name}. This may take a minute...")
+# pandas can directly ingest the data in database
+# df_legacy is a data frame, not setting any index 
 df_legacy.to_sql(table_name, engine, if_exists='replace', index=False, schema='dbo')
 
 print("✅ Legacy data ingestion complete!")
