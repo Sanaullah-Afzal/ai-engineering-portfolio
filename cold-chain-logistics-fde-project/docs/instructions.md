@@ -34,8 +34,28 @@ docker run -v mssql_data:/var/opt/mssql \
   just install OBDC driver and MSSQL Server on Dockcer should be up for local system
 
 # Connecting to the data
-We need to query the database
-We will be using SQL server here
 
-  VS code is good for MSSQL as it provides the extension
-- Download : 
+We need to query the database
+
+- Download : https://github.com/microsoft/azuredatastudio
+
+   - https://learn.microsoft.com/en-us/previous-versions/azure-data-studio/download-azure-data-studio?tabs=win-install%2Cwin-user-install%2Credhat-install%2Cwindows-uninstall%2Credhat-uninstall
+- The recommendation is to use VS code extension : "SQL Server (mssql)" by microsoft
+
+   - Click on icon that looks like server or refrigarator, not the one with cylinder
+   - Add connection
+   - Fill the below :
+   ```
+   Profile Name: legacy-mssql
+   Server name*: localhost
+   Port: 1433
+   Trust server certificate: 🟩 Check this box / turn it ON (Crucial for Docker)
+   Authentication type*: SQL Login
+   User name*: sa
+   Password*: FdeEnterprisePass123!
+   Save Password: 🟩 Check this box
+   Database name: Type master (or leave it on "Select a database")
+   Encrypt: ⚠️ Change this from Mandatory to Optional (or False)
+   ```
+
+- Ctrl + N to run a sql query

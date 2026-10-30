@@ -1,4 +1,4 @@
-# just install OBDC drover and MSSQL Server on Doekcer should be up
+# just install OBDC drover and MSSQL Server on Doekcer should be up for local system
 
 from pathlib import Path
 import pandas as pd # to directly push and update in DB
