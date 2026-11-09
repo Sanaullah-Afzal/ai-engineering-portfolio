@@ -2,7 +2,7 @@
 
 This document covers the end-to-end setup, data ingestion, security view configuration, vector DB synchronization, agent testing, and audit log setup for the Cold Chain Logistics FDE system.
 
----
+--- 
 
 ## Phase 0: Infrastructure & Data Ingestion
 
