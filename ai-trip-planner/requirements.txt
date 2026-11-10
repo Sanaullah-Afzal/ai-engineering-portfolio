@@ -7,11 +7,11 @@ streamlit # for running the Streamlit app UI
 uvicorn # for running the FastAPI server
 pydantic # for data validation and settings management
 httpx # for making HTTP requests to any url from internet
-requests
+requests    
 langchain_google_community
 langchain_tavily
 langchain_groq
-langchain_openai
+langchain-google-genai
 langgraph
 langchain-google-community[places]
 
