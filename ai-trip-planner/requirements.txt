@@ -1,0 +1,18 @@
+langchain
+langchain-community
+langchain-experimental
+fastapi
+python-dotenv
+streamlit # for running the Streamlit app UI
+uvicorn # for running the FastAPI server
+pydantic # for data validation and settings management
+httpx # for making HTTP requests to any url from internet
+requests
+langchain_google_community
+langchain_tavily
+langchain_groq
+langchain_openai
+langgraph
+langchain-google-community[places]
+
+-e . # automatically triggers setup.py to download entire folder (ai-trip-planner) from current directory as a single package into venv so we dont need to mention absolute path while importing anthing, we can use relative path to import any module
