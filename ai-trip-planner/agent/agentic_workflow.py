@@ -19,8 +19,8 @@ class GraphBuilder():
         self.place_search_tools = PlaceSearchTool()
         self.calculator_tools = CalculatorTool()
         self.currency_converter_tools = CurrencyConverterTool()
-        
-        self.tools.extend([* self.weather_tools.weather_tool_list, 
+        # creating list of tools, Star (*) operator is used to unpack the list (Unpacking Operator),and throw them together into one unified self.tools toolbox for the agent
+        self.tools.extend([* self.weather_tools.weather_tool_list,  
                            * self.place_search_tools.place_search_tool_list,
                            * self.calculator_tools.calculator_tool_list,
                            * self.currency_converter_tools.currency_converter_tool_list])

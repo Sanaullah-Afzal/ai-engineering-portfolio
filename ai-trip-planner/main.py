@@ -1,41 +1,33 @@
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from agent.agentic_workflow import GraphBuilder
-from utils.save_to_document import save_document
-from starlette.responses import JSONResponse
-import os
-import datetime
-from dotenv import load_dotenv
 from pydantic import BaseModel
-load_dotenv()
+from agent.agentic_workflow import GraphBuilder
+from fastapi.responses import JSONResponse
+import os
 
-app = FastAPI()
+app=FastAPI()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # set specific origins in prod
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 class QueryRequest(BaseModel):
-    question: str
+    query: str
 
-@app.post("/query")
-async def query_travel_agent(query:QueryRequest):
+
+# this is a post query, we'll post something through our form, it will come to the server then backend and then return a response
+@app.post("/query") # this route will be calling below func. this url is taking a query, so whenever we send a post request to this url, it will take the query and pass it to the agentic workflow
+async def query_travel_agent(query:QueryRequest): #taking query from user end
     try:
         print(query)
-        graph = GraphBuilder(model_provider="groq")
-        react_app=graph()
-        #react_app = graph.build_graph()
+        graph = GraphBuilder(model_provider="groq") # creating graph object, inside this func we will be calling the graph builder class from agentic workflow
+        react_app=graph() # calling the graph object as function, it then calls __call__ method of graph builder class, which in turn calls build_graph method and returns the graph object
 
+        #saving the graph
         png_graph = react_app.get_graph().draw_mermaid_png()
         with open("my_graph.png", "wb") as f:
             f.write(png_graph)
 
         print(f"Graph saved as 'my_graph.png' in {os.getcwd()}")
-        # Assuming request is a pydantic object like: {"question": "your text"}
-        messages={"messages": [query.question]}
+        
+        # Assuming request is a pydantic object like: {"question": "your text"}, validating here
+        messages={"messages": [query.question]} # getting query from state
+        
         output = react_app.invoke(messages)
 
         # If result is dict with messages:
@@ -47,3 +39,5 @@ async def query_travel_agent(query:QueryRequest):
         return {"answer": final_output}
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
+    
+    
