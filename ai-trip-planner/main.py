@@ -82,6 +82,12 @@ async def query_travel_agent(request: QueryRequest):
             final_output = str(output)
         
         return {"answer": final_output}
+        #saving the graph
+        png_graph = react_app.get_graph().draw_mermaid_png()
+        with open("travel_planner_graph.png", "wb") as f:
+            f.write(png_graph)
+
+        print(f"Graph saved as 'travel_planner_graph.png' in {os.getcwd()}")
         
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
