@@ -1,20 +1,20 @@
 class Calculator:
     @staticmethod
-    def multiply(a: int, b: int) -> int:
+    def multiply(a: float, b: float) -> float:
         """
-        Multiply two integers.
+        Multiply two floats.
 
         Args:
-            a (int): The first integer.
-            b (int): The second integer.
+            a (float): The first float.
+            b (float): The second float.
 
         Returns:
-            int: The product of a and b.
+            float: The product of a and b.
         """
         return a * b
     
     @staticmethod
-    def calculate_total(*x: float) -> float:
+    def calculate_total(x: list[float]) -> float:
         """
         Calculate sum of the given list of numbers
 

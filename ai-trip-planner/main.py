@@ -26,7 +26,7 @@ async def query_travel_agent(query:QueryRequest): #taking query from user end
         print(f"Graph saved as 'my_graph.png' in {os.getcwd()}")
         
         # Assuming request is a pydantic object like: {"question": "your text"}, validating here
-        messages={"messages": [query.question]} # getting query from state
+        messages={"messages": [query.query]} # getting query from state
         
         output = react_app.invoke(messages)
 

@@ -12,12 +12,17 @@ class CalculatorTool:
         @tool
         def estimate_total_hotel_cost(price_per_night:str, total_days:float) -> float:
             """Calculate total hotel cost"""
-            return self.calculator.multiply(price_per_night, total_days)
-        
+            # Strip out spaces or common currency words if the LLM adds them
+            if isinstance(price_per_night, str):
+                price_per_night = "".join(c for c in price_per_night if c.isdigit() or c == '.')
+            clean_price = float(price_per_night)
+            clean_days = float(total_days)
+            return self.calculator.multiply(clean_price, clean_days)
+
         @tool
-        def calculate_total_expense(*costs: float) -> float:
+        def calculate_total_expense(costs: list[float]) -> float:
             """Calculate total expense of the trip"""
-            return self.calculator.calculate_total(*costs)
+            return self.calculator.calculate_total(costs) 
         
         @tool
         def calculate_daily_expense_budget(total_cost: float, days: int) -> float:

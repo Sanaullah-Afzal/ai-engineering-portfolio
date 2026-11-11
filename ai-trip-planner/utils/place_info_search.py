@@ -5,8 +5,16 @@ from langchain_google_community import GooglePlacesTool, GooglePlacesAPIWrapper
 
 class GooglePlaceSearchTool:
     def __init__(self, api_key: str):
-        self.places_wrapper = GooglePlacesAPIWrapper(gplaces_api_key=api_key)
-        self.places_tool = GooglePlacesTool(api_wrapper=self.places_wrapper)
+
+        if api_key:
+            try:
+                self.places_wrapper = GooglePlacesAPIWrapper(gplaces_api_key=api_key)
+                self.places_tool = GooglePlacesTool(api_wrapper=self.places_wrapper)
+                self.is_available = True
+            except Exception:
+                self.is_available = False
+        else:
+            self.is_available = False
     
     def google_search_attractions(self, place: str) -> dict:
         """

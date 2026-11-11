@@ -8,7 +8,7 @@ import sys
 BASE_URL = "http://localhost:8000"  # Backend endpoint, baseurl when we are going to expose functionality as api  
 
 st.set_page_config(
-    page_title="🌍 Travel Planner Agentic Application",
+    # page_title="🌍 Travel Planner Agentic Application",
     page_icon="🌍",
     layout="centered",
     initial_sidebar_state="expanded",
@@ -33,7 +33,7 @@ if submit_button and user_input.strip():
         # # Show user message
         # Show thinking spinner while backend processes
         with st.spinner("Bot is thinking..."):
-            payload = {"question": user_input}
+            payload = {"query": user_input}
             response = requests.post(f"{BASE_URL}/query", json=payload) # output from main.py endpoint
 
         if response.status_code == 200:

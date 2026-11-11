@@ -22,14 +22,16 @@ class ModelLoader(BaseModel): #pydantic class for model loading
     def model_post_init(self, __context: Any) -> None: #Pydantic models handle validation and initialization, automatic startup routine # load config after initializationn that we have written in .yaml file
         self.config = ConfigLoader() 
     
-    # class Config:
-    #     arbitrary_types_allowed = True  
-    
+    class Config:
+        arbitrary_types_allowed = True  
+
     def load_llm(self):
         """
         Load and return the LLM model.
         """
         print("LLM loading...")
+        load_dotenv()  # Load environment variables from .env file
+
         print(f"Loading model from provider: {self.model_provider}")
         if self.model_provider == "groq":
             print("Loading LLM from Groq..............")

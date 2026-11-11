@@ -4,4 +4,4 @@ llm:
     model_name: "gemini-1.5-flash"
   groq:
     provider: "groq"
-    model_name: "deepseek-r1-distill-llama-70b"
+    model_name: "openai/gpt-oss-120b"  
